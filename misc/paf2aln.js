@@ -40,8 +40,8 @@ var c, line_len = 80, fmt = "aln";
 while ((c = getopt(arguments, "f:l:")) != null) {
 	if (c == 'f') {
 		fmt = getopt.arg;
-		if (fmt != "aln" && fmt != "last" && fmt != "maf")
-			throw Error("format must be one of aln, last and maf");
+		if (fmt != "aln" && fmt != "lastz-cgar" && fmt != "maf")
+			throw Error("format must be one of aln, lastz-cigar and maf");
 	} else if (c == 'l') line_len = parseInt(getopt.arg);
 }
 if (line_len == 0) line_len = 0x7fffffff;
@@ -49,7 +49,7 @@ if (line_len == 0) line_len = 0x7fffffff;
 if (getopt.ind == arguments.length) {
 	print("Usage: k8 paf2aln.js [options] <in.paf>");
 	print("Options:");
-	print("  -f STR    output format: aln (BLAST-like), maf or last [aln]");
+	print("  -f STR    output format: aln (BLAST-like), maf or lastz-cigar [aln]");
 	print("  -l INT    line length in BLAST-like output [80]");
 	exit(1);
 }
@@ -114,10 +114,10 @@ while (file.readline(buf) >= 0) {
 	++lineno;
 	s_ref.length = s_qry.length = s_mid.length = 0;
 	var slen = [0, 0], elen = [0, 0];
-	if (fmt == "last") { // LAST cigar output
+	if (fmt == "lastz-cigar") { // LASTZ-cigar output
 		var cg = (m = /\tcg:Z:(\S+)/.exec(line)) != null? m[1] : null;
 		if (cg == null) {
-			warn("WARNING: converting to LAST cigar format requires the 'cg' tag, which is absent on line " + lineno);
+			warn("WARNING: converting to LASTZ-cigar format requires the 'cg' tag, which is absent on line " + lineno);
 			continue;
 		}
 		var score = (m = /\tAS:i:(\d+)/.exec(line)) != null? m[1] : 0;
