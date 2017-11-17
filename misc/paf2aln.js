@@ -40,7 +40,7 @@ var c, line_len = 80, fmt = "aln";
 while ((c = getopt(arguments, "f:l:")) != null) {
 	if (c == 'f') {
 		fmt = getopt.arg;
-		if (fmt != "aln" && fmt != "lastz-cgar" && fmt != "maf")
+		if (fmt != "aln" && fmt != "lastz-cigar" && fmt != "maf")
 			throw Error("format must be one of aln, lastz-cigar and maf");
 	} else if (c == 'l') line_len = parseInt(getopt.arg);
 }
