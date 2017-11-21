@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+import os
+import shutil
+
+paf2aln = os.path.join(os.path.dirname(subprocess.Popen("which minimap2", shell=True, stdout=subprocess.PIPE).stdout.read()), "misc", "paf2aln.js")
+
+mini = subprocess.Popen(["minimap2"] + sys.argv[1:], shell=False, stdout=subprocess.PIPE)
+paf = subprocess.call(["k8", paf2aln, "-f", "lastz-cigar", "/dev/stdin"], stdin=mini.stdout, shell=False)
+
+
